@@ -6,19 +6,19 @@ services:
         uid: 1000
       context: ./
       dockerfile: Dockerfile
-    image: dawapp
-    container_name: dawapp-app
+    image: ciclistas
+    container_name: ciclistas-app
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
       - ./:/var/www
     networks:
-      - dawapp
+      - ciclistas
   
   db:
     image: mysql:5.7
     platform: linux/amd64
-    container_name: dawapp-db
+    container_name: ciclistas-db
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -30,12 +30,12 @@ services:
     volumes:
       - ./docker-compose/mysql:/docker-entrypoint-initdb.d
     networks:
-      - dawapp
+      - ciclistas
   
   nginx:
     image: nginx:1.17-alpine
     platform: linux/amd64
-    container_name: dawapp-nginx
+    container_name: ciclistas-nginx
     restart: unless-stopped
     ports:
       - 8000:80
@@ -43,8 +43,8 @@ services:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d
     networks:
-      - dawapp
+      - ciclistas
 
 networks:
-  dawapp:
+  ciclistas:
     driver: bridge
